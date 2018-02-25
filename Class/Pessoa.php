@@ -44,6 +44,19 @@ class Pessoa {
 
 	}
 
+	public static function pesquisa($nome){
+		$sql = new Sql();
+		return $sql->select("SELECT * FROM membros.pessoa WHERE nome LIKE :NOME", array(
+			":NOME"=>"%".$nome."%"));
+
+
+	}
+
+	public static function getLista(){
+		$sql = new Sql();
+		return $sql->select("SELECT * FROM membros.pessoa order by nome");
+	}
+
 	public function __toString(){
 		return json_encode(array(
 			"idpessoa"=>$this->getIdpessoa(), 
