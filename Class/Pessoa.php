@@ -36,10 +36,7 @@ class Pessoa {
 		":ID"=>$id
 		));
 		if (count($results)>0){
-			$row = $results[0];
-			$this->setIdpessoa($row['idpessoa']);
-			$this->setNome($row['nome']);
-			$this->setEmail($row['email']);
+			$this->setData($results);
 		}
 
 	}
@@ -49,12 +46,28 @@ class Pessoa {
 		return $sql->select("SELECT * FROM membros.pessoa WHERE nome LIKE :NOME", array(
 			":NOME"=>"%".$nome."%"));
 
-
 	}
 
 	public static function getLista(){
 		$sql = new Sql();
 		return $sql->select("SELECT * FROM membros.pessoa order by nome");
+	}
+
+	public function setData($data){
+		$this->setIdpessoa($data['idpessoa']);
+		$this->setNome($data['nome']);
+		$this->setEmail($data['email']);
+	}
+
+	public function insert(){
+		$sql = new Sql();
+		$results = $sql->select("CALL membros.sp_pessoa_insert(:NOME, :EMAIL)", array(
+			":NOME"=>$this->getNome(),
+			":EMAIL"=>$this->getEmail()
+		));
+		if (count($results) > 0){
+			$this->setData($results[0]);
+		}
 	}
 
 	public function __toString(){

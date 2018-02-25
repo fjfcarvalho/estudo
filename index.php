@@ -15,6 +15,13 @@ require_once("config.php");
 // $pessoa = Pessoa::getLista();
 // echo json_encode($pessoa);
 
-$pessoa = Pessoa::pesquisa("Artemia");
-echo json_encode($pessoa);
+// $pessoa = Pessoa::pesquisa("Artemia");
+// echo json_encode($pessoa);
+
+$pessoa = new Pessoa();
+$pessoa->setNome("Fernando II");
+$pessoa->setEmail("fernandoII@testeII.com");
+$pessoa->insert();
+echo $pessoa;
+
 ?>
